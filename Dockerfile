@@ -1,22 +1,23 @@
 FROM alpine:3.11
 RUN apk add --no-cache \
-    ca-certificates \
-    less \
-    ncurses-terminfo-base \
-    krb5-libs \
-    libgcc \
-    libintl \
-    libssl1.1 \
-    libstdc++ \
-    tzdata \
-    userspace-rcu \
-    zlib \
-    icu-libs \
-    curl \
-    && apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache lttng-ust \
+    ca-certificates~=20191127-r1 \
+    less~=551-r0 \
+    ncurses-terminfo-base~=6.1_p20191130-r0 \
+    krb5-libs~=1.17.1-r0 \
+    libgcc~=9.2.0 \
+    libintl~=0.20.1 \
+    libssl1.1~=1.1.1d \
+    libstdc++~=9.2.0 \
+    tzdata~=2019c \
+    userspace-rcu~=0.11.1 \
+    zlib~=1.2.11 \
+    icu-libs~=64.2 \
+    curl~=7.67.0 \
+    lttng-ust~=2.10.4 \
     && curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.0.0-preview.4/powershell-7.0.0-preview.4-linux-alpine-x64.tar.gz -o /tmp/powershell.tar.gz \
     && mkdir -p /opt/microsoft/powershell/7-preview \
     && tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7-preview \
     && chmod +x /opt/microsoft/powershell/7-preview/pwsh \
-    && ln -s /opt/microsoft/powershell/7-preview/pwsh /usr/bin/pwsh
+    && ln -s /opt/microsoft/powershell/7-preview/pwsh /usr/bin/pwsh \
+    && pwsh -c Install-Module  -Name Az -AllowClobber -Scope AllUsers -Force
 ENTRYPOINT [ "pwsh" ]
