@@ -34,3 +34,5 @@ To use Kubectl as default endpoint you can execute:
 ```Docker
 docker run --rm --entrypoint kubectl -it seitosana/azure_administration:tagname 
 ```
+
+Kubectl need to be connected. To do this you can mount a shared volume from your $HOME/.kube or you can specify TOKEN with kubectl cli. 
