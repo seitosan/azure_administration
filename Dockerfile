@@ -1,4 +1,5 @@
 FROM alpine:3.11
+ENV KUBE_VERSION=v1.17.3
 RUN apk add --no-cache \
     ca-certificates~=20191127-r1 \
     less~=551-r0 \
@@ -19,5 +20,8 @@ RUN apk add --no-cache \
     && tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7-preview \
     && chmod +x /opt/microsoft/powershell/7-preview/pwsh \
     && ln -s /opt/microsoft/powershell/7-preview/pwsh /usr/bin/pwsh \
-    && pwsh -c Install-Module  -Name Az -AllowClobber -Scope AllUsers -Force
+    && pwsh -c Install-Module  -Name Az -AllowClobber -Scope AllUsers -Force \
+    && curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBE_VERSION}/bin/linux/amd64/kubectl \
+    && chmod +x ./kubectl \
+    && mv ./kubectl /usr/local/bin/kubectl
 ENTRYPOINT [ "pwsh" ]
